@@ -1,0 +1,28 @@
+{
+  "name"        : "jquery-page-foundation",
+  "main"        : "jquery-page-foundation.js",
+  "version"     : "1.0.0",
+  "title"       : "jQuery page foundation",
+  "description" : "Provides foundation configuration",
+  "keywords"    : ["jquery"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hnhdigital-os/jquery-page-foundation.git"
+  },
+  "author" : {
+    "name"  : "Rocco Howard",
+    "email" : "rocco@hnh.digital",
+    "url"   : "http://roccohoward.com/"
+  },
+
+  "dependencies" : {
+    "jquery" : ">= 1.7"
+  },
+
+  "licenses" : [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ]
+}
