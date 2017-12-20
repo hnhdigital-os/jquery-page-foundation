@@ -88,21 +88,17 @@ $.ajaxSetup({
   }
 });
 
-(function() {
-  var originalAddClass = jQuery.fn.addClass;
-  jQuery.fn.addClass = function() {
-    var result = originalAddClass.apply(this, arguments);
-    jQuery(this).trigger('capture:addClass', ...arguments);
-    return result;
-  }
-  var originalRemoveClass = jQuery.fn.removeClass;
-  jQuery.fn.removeClass = function() {
-    var result = originalRemoveClass.apply(this, arguments);
-    jQuery(this).trigger('capture:removeClass', ...arguments);
-    return result;
-  }
-})();
-
+(function ($) {
+  $.each(['show', 'hide', 'toggle', 'addClass', 'removeClass'], function (i, ev) {
+    var el = $.fn[ev];
+    $.fn[ev] = function () {
+      this.trigger('before:'+ev);
+      var result = el.apply(this, arguments);
+      this.trigger('after:'+ev);
+      return result;
+    };
+  });
+})(jQuery);
 
 var $H = {
   build: function(data) {
