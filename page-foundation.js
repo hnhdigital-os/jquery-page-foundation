@@ -44,11 +44,14 @@ $.ajaxSetup({
     } else {
       switch (textStatus) {
         case 'error':
-          toastr.remove();
-          if (typeof Ladda != 'undefined') {
-            Ladda.stopAll();
+          // Server errors.
+          if (jqXHR.status >= 500) {
+            toastr.remove();
+            if (typeof Ladda != 'undefined') {
+              Ladda.stopAll();
+            }
+            toastr.error("Houston, we have a problem.", 'An error occurred :(', {timeOut: 0});
           }
-          toastr.error("Houston, we have a problem.", 'An error occurred :(', {timeOut: 0});
           break;
         case 'timeout':
           toastr.remove();
