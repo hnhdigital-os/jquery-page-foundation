@@ -109,6 +109,17 @@ var $H = {
   }
 }
 
+$.icon = function(icon_class)
+{
+  default_type = 'l';
+  if (icon_class.substring(1, 2) == ' ') {
+    default_type = icon_class.substring(1, 1);
+    icon_class = icon_class.substring(2);
+  }
+
+  return '<i class="fa' + default_type + ' fa-fw ' + icon_class + '" aria-hidden="true"></i>';
+}
+
 if (typeof jQuery.validator != 'undefined') {
   jQuery.validator.setDefaults({ignore: '.ignore'});
 }
