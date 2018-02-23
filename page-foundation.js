@@ -117,7 +117,7 @@ $.icon = function(icon_class)
     icon_class = icon_class.substring(2);
   }
 
-  return '<i class="fa' + default_type + ' fa-fw ' + icon_class + '" aria-hidden="true"></i>';
+  return '<i class="fa' + default_type + ' fa-fw fa-' + icon_class + '" aria-hidden="true"></i>';
 }
 
 if (typeof jQuery.validator != 'undefined') {
