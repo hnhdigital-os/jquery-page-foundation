@@ -25,6 +25,9 @@ $.ajaxSetup({
     if (data.substring(0, 4) === 'http') {
       toastr.remove();
       toastr.info("Loading page...", '', {timeOut: 0});
+      if (window.location.href == data) {
+        location.reload(true);
+      }
       window.location.href = data;
       return false;
     }
