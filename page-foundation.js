@@ -75,6 +75,9 @@ $.ajaxSetup({
   }
 });
 
+/**
+ * Add a before and after trigger when one of the following methods are called.
+ */
 (function ($) {
   $.each(['show', 'hide', 'toggle', 'addClass', 'removeClass'], function (i, ev) {
     var el = $.fn[ev];
@@ -87,6 +90,13 @@ $.ajaxSetup({
   });
 })(jQuery);
 
+/**
+ * Build html from a javascript object.
+ *
+ * @param string data
+ *
+ * @return string
+ */
 var $H = {
   build: function(data) {
     html = '';
@@ -112,6 +122,13 @@ var $H = {
   }
 }
 
+/**
+ * FontAwesome Icon.
+ *
+ * @param string icon_class
+ *
+ * @return string
+ */
 $.icon = function(icon_class)
 {
   default_type = 'l';
@@ -123,6 +140,59 @@ $.icon = function(icon_class)
   return '<i class="fa' + default_type + ' fa-fw fa-' + icon_class + '" aria-hidden="true"></i>';
 }
 
-if (typeof jQuery.validator != 'undefined') {
-  jQuery.validator.setDefaults({ignore: '.ignore'});
+/**
+ * Add a replace options helper.
+ *
+ * @param string icon_class
+ *
+ * @return string
+ */
+$.fn.extend({
+  replaceOptions: function(new_options, config) {
+    // Default to empty array.
+    if (typeof new_options == 'undefined') {
+      new_options = [];
+    }
+
+    // Default to empty config.
+    if (typeof config == 'undefined') {
+      config = {};
+    }
+
+    return this.each(function() {
+      var pulldown = $(this);
+
+      // Only apply to select tags.
+      if (pulldown.tagName != 'SELECT') {
+        return;
+      }
+
+      // Maintain the selected option.
+      var current_value = pulldown.val();
+
+      // Optional to keep first option.
+      if (typeofconfig['keep-first'] != 'undefined') {
+        pulldown.find('option:gt(0)').remove();
+      } else {
+        pulldown.empty();
+      }
+
+      $.each(new_options, function(key, option) {
+        pulldown.append(
+          $("<option></option>")
+           .attr("value", option[0])
+           .text(option[1])
+        );
+      });
+
+      pulldown.val(current_value);
+    });
+  }
+});
+
+/**
+ * Add defaults for validator if it's defined.
+ */
+if (typeof $.validator != 'undefined') {
+  $.validator.setDefaults({ignore: '.ignore'});
 }
