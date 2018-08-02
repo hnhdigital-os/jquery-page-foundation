@@ -186,7 +186,12 @@ $.fn.extend({
         );
       });
 
-      pulldown.val(current_value);
+      // Check if the selected value exists, default to first selected index if it doesn't.
+      if (pulldown.find('option[value="' + current_value + '"]').length) {
+        pulldown.val(current_value);
+      } else {
+        pulldown.prop('selectedIndex', 0);
+      }
     });
   }
 });
