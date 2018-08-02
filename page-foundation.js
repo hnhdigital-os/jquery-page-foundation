@@ -149,6 +149,7 @@ $.icon = function(icon_class)
  */
 $.fn.extend({
   replaceOptions: function(new_options, config) {
+
     // Default to empty array.
     if (typeof new_options == 'undefined') {
       new_options = [];
@@ -171,7 +172,7 @@ $.fn.extend({
       var current_value = pulldown.val();
 
       // Optional to keep first option.
-      if (typeofconfig['keep-first'] != 'undefined') {
+      if (typeof config['keep-first'] != 'undefined') {
         pulldown.find('option:gt(0)').remove();
       } else {
         pulldown.empty();
