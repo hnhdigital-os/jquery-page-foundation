@@ -162,12 +162,15 @@ $.fn.extend({
     return this.each(function() {
       var pulldown = $(this);
 
-      if (pulldown.tagName != 'SELECT') {
+      // Only apply to select tags.
+      if (pulldown.prop('tagName') != 'SELECT') {
         return;
       }
 
+      // Maintain the selected option.
       var current_value = pulldown.val();
 
+      // Optional to keep first option.
       if (typeofconfig['keep-first'] != 'undefined') {
         pulldown.find('option:gt(0)').remove();
       } else {
