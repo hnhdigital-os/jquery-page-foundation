@@ -82,9 +82,9 @@ $.ajaxSetup({
   $.each(['show', 'hide', 'toggle', 'addClass', 'removeClass'], function (i, ev) {
     var el = $.fn[ev];
     $.fn[ev] = function () {
-      this.trigger('before:'+ev);
+      this.trigger('before:'+ev, [arguments]);
       var result = el.apply(this, arguments);
-      this.trigger('after:'+ev);
+      this.trigger('after:'+ev, [arguments]);
       return result;
     };
   });
