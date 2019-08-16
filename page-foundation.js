@@ -79,12 +79,14 @@ $.ajaxSetup({
  * Add a before and after trigger when one of the following methods are called.
  */
 (function ($) {
-  $.each(['show', 'hide', 'toggle', 'addClass', 'removeClass'], function (i, ev) {
+  $.each(['show', 'hide', 'fadeIn', 'fadeOut', 'toggle', 'addClass', 'removeClass'], function (i, ev) {
     var el = $.fn[ev];
     $.fn[ev] = function () {
       this.trigger('before:'+ev, [arguments]);
+      $(window).trigger('before:'+ev, [arguments, this]);
       var result = el.apply(this, arguments);
       this.trigger('after:'+ev, [arguments]);
+      $(window).trigger('after:'+ev, [arguments, this]);
       return result;
     };
   });
