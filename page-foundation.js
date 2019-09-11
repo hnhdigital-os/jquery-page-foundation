@@ -6,7 +6,7 @@ $.ajaxSetup({
   method: 'POST',
   statusCode: {
     401: function() {
-      toastr.remove();
+      $('#toast-container .toast').trigger('click');
       if (typeof Ladda != 'undefined') {
         Ladda.stopAll();
       }
@@ -14,7 +14,7 @@ $.ajaxSetup({
       window.location.reload(true);
     },
     404: function() {
-      toastr.remove();
+      $('#toast-container .toast').trigger('click');
       if (typeof Ladda != 'undefined') {
         Ladda.stopAll();
       }
@@ -23,7 +23,7 @@ $.ajaxSetup({
   },
   dataFilter: function(data, type) {
     if (data.substring(0, 4) === 'http') {
-      toastr.remove();
+      $('#toast-container .toast').trigger('click');
       toastr.info("Loading page...", '', {timeOut: 0});
       if (window.location.href == data) {
         location.reload(true);
@@ -38,7 +38,7 @@ $.ajaxSetup({
   },
   complete: function(jqXHR, textStatus) {
     if (jqXHR.getResponseHeader('X-FORCE_FRONTEND_REDIRECT') === '1') {
-      toastr.remove();
+      $('#toast-container .toast').trigger('click');
       if (typeof Ladda != 'undefined') {
         Ladda.stopAll();
       }
@@ -52,7 +52,7 @@ $.ajaxSetup({
       case 'error':
         // Server errors.
         if (jqXHR.status >= 500) {
-          toastr.remove();
+          $('#toast-container .toast').trigger('click');
           if (typeof Ladda != 'undefined') {
             Ladda.stopAll();
           }
@@ -60,14 +60,14 @@ $.ajaxSetup({
         }
         break;
       case 'timeout':
-        toastr.remove();
+        $('#toast-container .toast').trigger('click');
         if (typeof Ladda != 'undefined') {
           Ladda.stopAll();
         }
         toastr.error("Looks like we got stuck in the slow lane.", 'A timeout occurred :(', {timeOut: 0});
         break;
       case 'parsererror':
-        toastr.remove();
+        $('#toast-container .toast').trigger('click');
         if (typeof Ladda != 'undefined') {
           Ladda.stopAll();
         }
@@ -77,7 +77,7 @@ $.ajaxSetup({
 
     if (jqXHR.getResponseHeader('X-TOASTR') != '') {
       var toastr_messages = JSON.parse(jqXHR.getResponseHeader('X-TOASTR'));
-      toastr.remove();
+      $('#toast-container .toast').trigger('click');
 
       $.each(toastr_messages, function(key, value) {
         toastr[key](value);
