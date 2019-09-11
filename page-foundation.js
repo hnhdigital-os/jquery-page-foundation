@@ -44,33 +44,44 @@ $.ajaxSetup({
       }
       toastr.info("Loading page...", '', {timeOut: 0});
       window.location.href = jqXHR.responseText;
-    } else {
-      switch (textStatus) {
-        case 'error':
-          // Server errors.
-          if (jqXHR.status >= 500) {
-            toastr.remove();
-            if (typeof Ladda != 'undefined') {
-              Ladda.stopAll();
-            }
-            toastr.error("Houston, we have a problem.", 'An error occurred :(', {timeOut: 0});
-          }
-          break;
-        case 'timeout':
+      
+      return;
+    }
+
+    switch (textStatus) {
+      case 'error':
+        // Server errors.
+        if (jqXHR.status >= 500) {
           toastr.remove();
           if (typeof Ladda != 'undefined') {
             Ladda.stopAll();
           }
-          toastr.error("Looks like we got stuck in the slow lane.", 'A timeout occurred :(', {timeOut: 0});
-          break;
-        case 'parsererror':
-          toastr.remove();
-          if (typeof Ladda != 'undefined') {
-            Ladda.stopAll();
-          }
-          toastr.error("Looks like we got hit by a bug. Call the IT Support team.", 'A data error occurred :(', {timeOut: 0});
-          break;
-      }
+          toastr.error("Houston, we have a problem.", 'An error occurred :(', {timeOut: 0});
+        }
+        break;
+      case 'timeout':
+        toastr.remove();
+        if (typeof Ladda != 'undefined') {
+          Ladda.stopAll();
+        }
+        toastr.error("Looks like we got stuck in the slow lane.", 'A timeout occurred :(', {timeOut: 0});
+        break;
+      case 'parsererror':
+        toastr.remove();
+        if (typeof Ladda != 'undefined') {
+          Ladda.stopAll();
+        }
+        toastr.error("Looks like we got hit by a bug. Call the IT Support team.", 'A data error occurred :(', {timeOut: 0});
+        break;
+    }
+
+    if (jqXHR.getResponseHeader('X-TOASTR') != '') {
+      var toastr_messages = JSON.parse(jqXHR.getResponseHeader('X-TOASTR'));
+      toastr.remove();
+
+      $.each(toastr_messages, function(key, value) {
+        toastr[key](value);
+      });
     }
   }
 });
