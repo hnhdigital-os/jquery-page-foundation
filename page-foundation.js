@@ -144,6 +144,10 @@ var $H = {
  */
 $.icon = function(icon_class)
 {
+  if (! icon_class) {
+    return;
+  }
+
   default_type = 'l';
   if (icon_class.substring(1, 2) == ' ') {
     default_type = icon_class.substring(0, 1);
