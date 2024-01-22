@@ -22,19 +22,23 @@ $.ajaxSetup({
     }
   },
   dataFilter: function(data, type) {
-    url = JSON.parse(data);
-
-    if (typeof url === 'string' && url.substring(0, 4) === 'http') {
-      $('#toast-container .toast').trigger('click');
-      toastr.info("Loading page...", '', {timeOut: 0});
-      
-      if (window.location.href == url) {
-        location.reload(true);
+    try {
+      url = JSON.parse(data);
+  
+      if (typeof url === 'string' && url.substring(0, 4) === 'http') {
+        $('#toast-container .toast').trigger('click');
+        toastr.info("Loading page...", '', {timeOut: 0});
+        
+        if (window.location.href == url) {
+          location.reload(true);
+        }
+  
+        window.location.href = url;
+  
+        return false;
       }
-
-      window.location.href = url;
-
-      return false;
+    } catch (exception) {
+      
     }
 
     return data;
